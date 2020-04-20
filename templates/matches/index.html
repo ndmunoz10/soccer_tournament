@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Matches</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'home/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2&family=Fira+Sans:ital,wght@1,600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<header>
+    <h1>Oso de oro chino</h1>
+</header>
+
+<div class="contenedor3">
+
+    <div class="contenido1">
+        <div class="menu">
+            <nav>
+                <ul>
+                    <li><a href="{% url "index" %}">Home</a></li>
+                    <li><a class="active" href="{% url "get_matches" %}">Matches</a></li>
+                    <li><a href="{% url "get_transfers" %}">Traspasos</a></li>
+                    <li><a href="equipos.html">Equipos</a></li>
+                    <li><a href="estadios.html">Estadios</a></li>
+                    <li><a href="arbitros.html">Arbitros</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="content2">
+            <div class="izq">
+                <div class="up">
+                    <div class="title">
+                        <h1>Partidos</h1>
+                        <p>Pulsa sobre los partidos para obtener mas información.</p>
+                    </div>
+
+                    <div id="header-item-center">
+                        <form method="post">
+                            <label for="prisoner_search"></label>
+                            <input id="prisoner_search" type="text" name="user_input">
+                            <input type="submit" value="Buscar" />
+                        </form>
+                    </div>
+                </div>
+
+                {% if match_list %}
+                    <div class="informacion">
+                        <table class="tablas">
+                            <tr>
+                                <th>Equipo (Home)</th>
+                                <th>Marcador</th>
+                                <th>Equipo (Away)</th>
+                                <th>Marcador</th>
+                                <th>Estadio</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                            </tr>
+                            {% for match in match_list %}
+                                <tr>
+                                    <td>{{ match.home_team_name }}</td>
+                                    <td>{{ match.home_team_score }}</td>
+                                    <td>{{ match.away_team_name }}</td>
+                                    <td>{{ match.away_team_score }}</td>
+                                    <td>{{ match.stadium_name }}</td>
+                                    <td>{{ match.date }}</td>
+                                    <td>{{ match.start_time }}</td>
+                                    <td><img src="{% static "../../matches/matches/images/trash.png" %}" alt="caneca de basura de color rojo"></td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    </div>
+                {% endif %}
+
+            <div class="der">
+                <h2>Agregar Partido</h2>
+                <div class="formulario3">
+                    <form>
+                        <input type="text" placeholder="Equipo local">
+                        <input type="text" placeholder="Equipo visitante">
+                        <input type="text" placeholder="Estadio">
+                        <input type="date" placeholder="Fecha">
+                        <input type="number" placeholder="Hora">
+                        <input type="number" placeholder="Marcador">
+                        <input type="text" placeholder="Jugadores">
+
+                        <h3>Goles</h3>
+                        <input type="text" placeholder="Jugador">
+                        <input type="number" placeholder="Minuto">
+                        <input type="text" placeholder="Equipo">
+
+                        <h3>Cambios</h3>
+                        <input type="text" placeholder="Jugador que entra">
+                        <input type="text" placeholder="Jugador que sale">
+                        <input type="number" placeholder="Minuto">
+                        <input type="text" placeholder="Equipo">
+
+                        <h3>Faltas</h3>
+                        <input type="text" placeholder="Motivo">
+                        <input type="number" placeholder="Minuto">
+                        <input type="text" placeholder="Equipo">
+                        <input type="text" placeholder="Tarjeta">
+
+                        <h3>Cobros</h3>
+                        <input type="text" placeholder="Lanzador">
+                        <input type="text" placeholder="Jugadores en barrera">
+                        <input type="text" placeholder="Equipo">
+                        <input type="submit" value="Agregar">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

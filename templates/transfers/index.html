@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Transfers</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'transfer/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2&family=Fira+Sans:ital,wght@1,600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<header>
+    <h1>Oso de oro chino</h1>
+</header>
+
+<div class="contenedor4">
+
+    <div class="contenido1">
+        <div class="menu">
+            <nav>
+                <ul>
+                    <li><a href="{% url "index" %}">Home</a></li>
+                    <li><a href="{% url "get_matches" %}">Matches</a></li>
+                    <li><a class="active" href="{% url "get_transfers" %}">Transfers</a></li>
+                    <li><a href="equipos.html">Equipos</a></li>
+                    <li><a href="estadios.html">Estadios</a></li>
+                    <li><a href="arbitros.html">Arbitros</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="content2">
+            <div class="izq">
+                <div class="up">
+                    <div class="title">
+                        <h1>Traspasos</h1>
+                    </div>
+
+                    <div id="header-item-center">
+                        <form method="post">
+                            <label for="prisoner_search"></label>
+                            <input id="prisoner_search" type="text" name="user_input">
+                            <input type="submit" value="Buscar" />
+                        </form>
+                    </div>
+                </div>
+
+                {% if transfer_list %}
+
+                    <div class="informacion">
+                        <table class="tablas">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Equipo saliente</th>
+                                <th>Equipo traspasado</th>
+                                <th>Valor</th>
+                            </tr>
+
+                            {% for transfer in transfer_list %}
+                                <tr>
+                                    <td>{{ transfer.name }}</td>
+                                    <td>{{ transfer.old_team_name }}</td>
+                                    <td>{{ transfer.new_team_name }}</td>
+                                    <td>{{ transfer.price }}</td>
+                                    <td><img src="{% static "transfer/images/trash.png" %}" alt="caneca de basura de color rojo"></td>
+                                </tr>
+                            {% endfor %}
+
+                        </table>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="der">
+                <h2>Agregar Traspaso</h2>
+                <div class="formulario3">
+                    <form>
+                        <input type="text" placeholder="Nombre">
+                        <input type="text" placeholder="Equipo saliente">
+                        <input type="text" placeholder="Equipo traspasado">
+                        <input type="number" placeholder="Valor">
+                        <input type="submit" value="Agregar">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

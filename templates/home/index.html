@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'home/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2&family=Fira+Sans:ital,wght@1,600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header>
+        <h1>Oso de oro chino</h1>
+    </header>
+
+    <div class="contenedor2">
+
+        <div class="contenido1">
+            <div class="menu">
+                <nav>
+                    <ul>
+                        <li><a class="active" href="{% url "index" %}">Inicio</a></li>
+                        <li><a href="{% url "get_matches" %}">Partidos</a></li>
+                        <li><a href="{% url "get_transfers" %}">Traspasos</a></li>
+                        <li><a href="equipos.html">Equipos</a></li>
+                        <li><a href="estadios.html">Estadios</a></li>
+                        <li><a href="arbitros.html">Arbitros</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="content">
+                <img src="{% static "home/images/stadium.png" %}" alt="Imagen de un esatdio de futbol caricaturizado">
+                <div class="info">
+                    <p>Oso oro chino acaba de lanzar su aplicación para
+                        que sigas los partidos de tu equipo favorito,
+                        además tendras toda la imformación sobre los
+                        estadios, traspasos, arbitros y MUCHO MÁS.</p>
+                    <a href="partidos.html">Partidos</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
