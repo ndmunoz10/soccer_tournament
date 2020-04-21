@@ -23,9 +23,9 @@
                     <li><a href="{% url "index" %}">Home</a></li>
                     <li><a href="{% url "get_matches" %}">Matches</a></li>
                     <li><a class="active" href="{% url "get_transfers" %}">Transfers</a></li>
-                    <li><a href="equipos.html">Equipos</a></li>
-                    <li><a href="estadios.html">Estadios</a></li>
-                    <li><a href="arbitros.html">Arbitros</a></li>
+                    <li><a href="{% url "get_teams" %}">Teams</a></li>
+                    <li><a href="{% url "get_stadiums" %}">Stadiums</a></li>
+                    <li><a href="{% url "get_referees" %}">Referees</a></li>
                 </ul>
             </nav>
         </div>
@@ -34,14 +34,15 @@
             <div class="izq">
                 <div class="up">
                     <div class="title">
-                        <h1>Traspasos</h1>
+                        <h1>Transfers</h1>
                     </div>
 
                     <div id="header-item-center">
-                        <form method="post">
-                            <label for="prisoner_search"></label>
-                            <input id="prisoner_search" type="text" name="user_input">
-                            <input type="submit" value="Buscar" />
+                        <form method="post" action="{% url "search_transfer" %}">
+                            {% csrf_token %}
+                            <label for="transfer_search"></label>
+                            <input id="transfer_search" type="text" name="user_input">
+                            <input type="submit" value="Search" />
                         </form>
                     </div>
                 </div>
@@ -51,10 +52,10 @@
                     <div class="informacion">
                         <table class="tablas">
                             <tr>
-                                <th>Nombre</th>
-                                <th>Equipo saliente</th>
-                                <th>Equipo traspasado</th>
-                                <th>Valor</th>
+                                <th>Name</th>
+                                <th>Old Team</th>
+                                <th>New Team</th>
+                                <th>Price</th>
                             </tr>
 
                             {% for transfer in transfer_list %}
@@ -63,7 +64,7 @@
                                     <td>{{ transfer.old_team_name }}</td>
                                     <td>{{ transfer.new_team_name }}</td>
                                     <td>{{ transfer.price }}</td>
-                                    <td><img src="{% static "transfer/images/trash.png" %}" alt="caneca de basura de color rojo"></td>
+                                    <td><img onclick="location.href='{% url 'delete_transfer' transfer.id %}'" src="{% static "transfer/images/trash.png" %}" alt="caneca de basura de color rojo"></td>
                                 </tr>
                             {% endfor %}
 
@@ -73,14 +74,15 @@
             </div>
 
             <div class="der">
-                <h2>Agregar Traspaso</h2>
+                <h2>Add Transfer</h2>
                 <div class="formulario3">
-                    <form>
-                        <input type="text" placeholder="Nombre">
-                        <input type="text" placeholder="Equipo saliente">
-                        <input type="text" placeholder="Equipo traspasado">
-                        <input type="number" placeholder="Valor">
-                        <input type="submit" value="Agregar">
+                    <form method="post" action={% url "add_transfer" %}>
+                        {% csrf_token %}
+                        <input type="text" placeholder="Name" name="name">
+                        <input type="text" placeholder="Old Team" name="old_team_name">
+                        <input type="text" placeholder="New Team" name="new_team_name">
+                        <input type="number" placeholder="Price" name="price">
+                        <input type="submit" value="Add Transfer">
                     </form>
                 </div>
             </div>

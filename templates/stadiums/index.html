@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Stadiums</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'stadiums/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2&family=Fira+Sans:ital,wght@1,600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<header>
+    <h1>Oso de oro chino</h1>
+</header>
+
+<div class="contenedor4">
+
+    <div class="contenido1">
+        <div class="menu">
+            <nav>
+                <ul>
+                    <li><a href="{% url "index" %}">Home</a></li>
+                    <li><a href="{% url "get_matches" %}">Matches</a></li>
+                    <li><a href="{% url "get_transfers" %}">Transfers</a></li>
+                    <li><a href="{% url "get_teams" %}">Teams</a></li>
+                    <li><a class="active" href="{% url "get_stadiums" %}">Stadiums</a></li>
+                    <li><a href="{% url "get_referees" %}">Referees</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="content2">
+            <div class="izq">
+                <div class="up">
+                    <div class="title">
+                        <h1>Stadiums</h1>
+                    </div>
+
+                    <div id="header-item-center">
+                        <form method="post" action="{% url "search_stadium" %}">
+                            {% csrf_token %}
+                            <label for="stadium_search"></label>
+                            <input id="stadium_search" type="text" name="user_input">
+                            <input type="submit" value="Search" />
+                        </form>
+                    </div>
+                </div>
+
+                <div class="informacion">
+                    {% if stadium_list %}
+                        <table class="tablas">
+                            <tr>
+                                <th>Code</th>
+                                <th>Name</th>
+                                <th>Opening Year</th>
+                                <th>Capacity</th>
+                            </tr>
+                            {% for stadium in stadium_list %}
+                                <tr>
+                                    <td>{{ stadium.code }}</td>
+                                    <td>{{ stadium.name }}</td>
+                                    <td>{{ stadium.opening_year }}</td>
+                                    <td>{{ stadium.capacity }}</td>
+                                    <td><img onclick="location.href='{% url 'delete_stadium' stadium.id %}'" src="{% static "stadiums/images/trash.png" %}" alt="caneca de basura de color rojo"></td>
+                                </tr>
+                            {% endfor %}
+
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="der">
+                <h2>Add Stadium</h2>
+                <div class="formulario3">
+                    <form method="post" action="{% url "add_stadium" %}">
+                        {% csrf_token %}
+                        <input type="number" placeholder="Código" name="code">
+                        <input type="text" placeholder="Nombre" name="name">
+                        <input type="number" placeholder="Año inauguración" name="opening_year">
+                        <input type="number" placeholder="Capacidad" name="capacity">
+                        <input type="submit" value="Add Stadium">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

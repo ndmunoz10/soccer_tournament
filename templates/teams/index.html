@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Teams</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "teams/styles.css" %}">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2&family=Fira+Sans:ital,wght@1,600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<header>
+    <h1>Oso de oro chino</h1>
+</header>
+
+<div class="contenedor4">
+
+    <div class="contenido1">
+        <div class="menu">
+            <nav>
+                <ul>
+                    <li><a href="{% url "index" %}">Home</a></li>
+                    <li><a href="{% url "get_matches" %}">Matches</a></li>
+                    <li><a href="{% url "get_transfers" %}">Transfers</a></li>
+                    <li><a class="active" href="{% url "get_teams" %}">Teams</a></li>
+                    <li><a href="{% url "get_stadiums" %}">Stadiums</a></li>
+                    <li><a href="{% url "get_referees" %}">Referees</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="content2">
+            <div class="izq">
+                <div class="up">
+                    <div class="title">
+                        <h1>Equipos</h1>
+                        <p>Pulsa sobre los equipos para obtener mas información.</p>
+                    </div>
+
+                    <div id="header-item-center">
+                        <form method="post" action="{% url "search_team" %}">
+                            {% csrf_token %}
+                            <label for="team_search"></label>
+                            <input id="team_search" type="text" name="user_input">
+                            <input type="submit" value="Search" />
+                        </form>
+                    </div>
+                </div>
+
+                <div class="informacion">
+                    {% if team_list %}
+                        <table class="tablas">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Año creación</th>
+                            </tr>
+                            {% for team in team_list %}
+                                <tr>
+                                    <td onclick="location.href='{% url 'get_team_stats' team.id %}'">{{ team.name }}</td>
+                                    <td onclick="location.href='{% url 'get_team_stats' team.id %}'">{{ team.creation_year }}</td>
+                                    <td onclick="location.href='{% url 'delete_team' team.id %}'"><img src="{% static "teams/images/trash.png" %}" alt="caneca de basura de color rojo"></td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="der">
+                <h2>Add Team</h2>
+                <div class="formulario3">
+                    <form method="post" action="{% url "add_team" %}">
+                        {% csrf_token %}
+                        <input type="text" placeholder="Name" name="team_name">
+                        <input type="number" placeholder="Creation Year" name="creation_year">
+
+                        <h3>City</h3>
+                        <input type="text" placeholder="Name" name="city_name">
+                        <input type="number" placeholder="Population Size" name="population_size">
+
+                        <h3>Sponsor</h3>
+                        <input type="text" placeholder="Name" name="sponsor_name">
+                        <input type="text" placeholder="Legal Representative" name="legal_representative">
+                        <input type="text" placeholder="Origin City" name="origin_city">
+                        <input type="email" placeholder="E-mail" name="email">
+                        <input type="submit" value="Add Team">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

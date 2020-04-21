@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Referees</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "referee/styles.css" %}">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2&family=Fira+Sans:ital,wght@1,600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<header>
+    <h1>Oso de oro chino</h1>
+</header>
+
+<div class="contenedor4">
+
+    <div class="contenido1">
+        <div class="menu">
+            <nav>
+                <ul>
+                    <li><a href="{% url "index" %}">Home</a></li>
+                    <li><a href="{% url "get_matches" %}">Matches</a></li>
+                    <li><a href="{% url "get_transfers" %}">Transfers</a></li>
+                    <li><a href="{% url "get_teams" %}">Teams</a></li>
+                    <li><a href="{% url "get_stadiums" %}">Stadiums</a></li>
+                    <li><a class="active" href="{% url "get_referees" %}">Referees</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="content2">
+            <div class="izq">
+                <div class="up">
+                    <div class="title">
+                        <h1>Arbitros</h1>
+                    </div>
+
+                    <div id="header-item-center">
+                        <form method="post" action="{% url "search_referee" %}">
+                            {% csrf_token %}
+                            <label for="referee_search"></label>
+                            <input id="referee_search" type="text" name="user_input">
+                            <input type="submit" value="Search" />
+                        </form>
+                    </div>
+                </div>
+
+                <div class="informacion">
+                    {% if referee_list %}
+
+                    <table class="tablas">
+                        <tr>
+                            <th>Card Id</th>
+                            <th>Name</th>
+                            <th>Tutor</th>
+                        </tr>
+                        {% for referee in referee_list %}
+                            <tr>
+                            <td>{{ referee.id_card }}</td>
+                            <td>{{ referee.name }}</td>
+                            <td>{{ referee.tutor }}</td>
+                            <td onclick="location.href='{% url 'delete_referee' referee.id %}'"><img src="{% static "referee/images/trash.png" %}" alt="caneca de basura de color rojo"></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="der">
+                <h2>Add Referee</h2>
+                <div class="formulario3">
+                    <form method="post" action="{% url "add_referee" %}">
+                        {% csrf_token %}
+                        <input type="number" placeholder="Card Id" name="card_id">
+                        <input type="text" placeholder="Name" name="name">
+                        <input type="text" placeholder="Tutor" name="tutor">
+                        <input type="submit" value="Add Referee">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

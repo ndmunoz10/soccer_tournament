@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Match Stats</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'matches/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2&family=Fira+Sans:ital,wght@1,600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<header>
+    <h1>Oso de oro chino</h1>
+</header>
+
+<div class="contenedor3">
+
+    <div class="contenido1">
+        <div class="menu">
+            <nav>
+                <ul>
+                    <li><a href="{% url "index" %}">Home</a></li>
+                    <li><a class="active" href="{% url "get_matches" %}">Matches</a></li>
+                    <li><a href="{% url "get_transfers" %}">Transfers</a></li>
+                    <li><a href="{% url "get_teams" %}">Teams</a></li>
+                    <li><a href="{% url "get_stadiums" %}">Stadiums</a></li>
+                    <li><a href="{% url "get_referees" %}">Referees</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="content2">
+            <div class="up2">
+                <div class="title2">
+                    <h1>Matches</h1>
+                    {% if away_team_name and home_team_name %}
+                        <p>{{ home_team_name }} vs {{ away_team_name }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="izq2">
+                <div class="sec1">
+                    <h2>Goals</h2>
+                    {% if goal_list %}
+                        <table class="tablas2">
+                            <tr>
+                                <th>Name</th>
+                                <th>Minute</th>
+                                <th>Team</th>
+                            </tr>
+                            {% for goal in goal_list %}
+                                <tr>
+                                    <td>{{ goal.player_name }}</td>
+                                    <td>{{ goal.minute }}</td>
+                                    <td>{{ goal.team }}</td>
+                                </tr>
+                            {% endfor %}
+
+                        </table>
+                    {% endif %}
+                </div>
+
+                <div class="sec1">
+                    <h2>Faults</h2>
+                    {% if fault_list %}
+                        <table class="tablas2">
+                            <tr>
+                                <th>Reason</th>
+                                <th>Minute</th>
+                                <th>Team</th>
+                                <th>Card</th>
+                            </tr>
+                            {% for fault in fault_list %}
+                                <tr>
+                                    <td>{{ fault.reason }}</td>
+                                    <td>{{ fault.minute }}</td>
+                                    <td>{{ fault.team_name }}</td>
+                                    <td>{{ fault.card }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="der2">
+                <div class="sec1">
+                    <h2>Free Kicks</h2>
+                    {% if free_kick_list %}
+                        <table class="tablas2">
+                            <tr>
+                                <th>Shooter</th>
+                                <th>Barrier players</th>
+                                <th>Team</th>
+                            </tr>
+                            {% for free_kick in free_kick_list %}
+                                <tr>
+                                    <td>{{ free_kick.shooter_name }}</td>
+                                    <td>{{ free_kick.barrier_names }}</td>
+                                    <td>{{ free_kick.team_name }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% endif %}
+                </div>
+
+                <div class="sec1">
+                    <h2>Changes</h2>
+                    {% if change_list %}
+                        <table class="tablas2">
+                            <tr>
+                                <th>Incoming Player</th>
+                                <th>Outgoing Player</th>
+                                <th>Minute</th>
+                                <th>Team</th>
+                            </tr>
+                            {% for change in change_list %}
+                                <tr>
+                                    <td>{{ change.in_player_name }}</td>
+                                    <td>{{ change.out_player_name }}</td>
+                                    <td>{{ change.minute }}</td>
+                                    <td>{{ change.team_name }}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

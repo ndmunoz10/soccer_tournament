@@ -22,10 +22,10 @@
                 <ul>
                     <li><a href="{% url "index" %}">Home</a></li>
                     <li><a class="active" href="{% url "get_matches" %}">Matches</a></li>
-                    <li><a href="{% url "get_transfers" %}">Traspasos</a></li>
-                    <li><a href="equipos.html">Equipos</a></li>
-                    <li><a href="estadios.html">Estadios</a></li>
-                    <li><a href="arbitros.html">Arbitros</a></li>
+                    <li><a href="{% url "get_transfers" %}">Transfers</a></li>
+                    <li><a href="{% url "get_teams" %}">Teams</a></li>
+                    <li><a href="{% url "get_stadiums" %}">Stadiums</a></li>
+                    <li><a href="{% url "get_referees" %}">Referees</a></li>
                 </ul>
             </nav>
         </div>
@@ -34,15 +34,16 @@
             <div class="izq">
                 <div class="up">
                     <div class="title">
-                        <h1>Partidos</h1>
-                        <p>Pulsa sobre los partidos para obtener mas información.</p>
+                        <h1>Matches</h1>
+                        <p>Click a match of interest to get more info.</p>
                     </div>
 
                     <div id="header-item-center">
-                        <form method="post">
-                            <label for="prisoner_search"></label>
-                            <input id="prisoner_search" type="text" name="user_input">
-                            <input type="submit" value="Buscar" />
+                        <form method="post" action="{% url 'search_match' %}">
+                            {% csrf_token %}
+                            <label for="match_search"></label>
+                            <input id="match_search" type="text" name="user_input">
+                            <input type="submit" value="Search" />
                         </form>
                     </div>
                 </div>
@@ -51,24 +52,26 @@
                     <div class="informacion">
                         <table class="tablas">
                             <tr>
-                                <th>Equipo (Home)</th>
-                                <th>Marcador</th>
-                                <th>Equipo (Away)</th>
-                                <th>Marcador</th>
-                                <th>Estadio</th>
-                                <th>Fecha</th>
-                                <th>Hora</th>
+                                <th>Team (Home)</th>
+                                <th>Score</th>
+                                <th>Team (Away)</th>
+                                <th>Score</th>
+                                <th>Stadium</th>
+                                <th>Date</th>
+                                <th>Time</th>
                             </tr>
                             {% for match in match_list %}
                                 <tr>
-                                    <td>{{ match.home_team_name }}</td>
-                                    <td>{{ match.home_team_score }}</td>
-                                    <td>{{ match.away_team_name }}</td>
-                                    <td>{{ match.away_team_score }}</td>
-                                    <td>{{ match.stadium_name }}</td>
-                                    <td>{{ match.date }}</td>
-                                    <td>{{ match.start_time }}</td>
-                                    <td><img src="{% static "../../matches/matches/images/trash.png" %}" alt="caneca de basura de color rojo"></td>
+                                    <td onclick="location.href='{% url 'get_match_stats' match.id %}'">{{ match.home_team_name }}</td>
+                                    <td onclick="location.href='{% url 'get_match_stats' match.id %}'">{{ match.home_team_score }}</td>
+                                    <td onclick="location.href='{% url 'get_match_stats' match.id %}'">{{ match.away_team_name }}</td>
+                                    <td onclick="location.href='{% url 'get_match_stats' match.id %}'">{{ match.away_team_score }}</td>
+                                    <td onclick="location.href='{% url 'get_match_stats' match.id %}'">{{ match.stadium_name }}</td>
+                                    <td onclick="location.href='{% url 'get_match_stats' match.id %}'">{{ match.date }}</td>
+                                    <td onclick="location.href='{% url 'get_match_stats' match.id %}'">{{ match.start_time }}</td>
+                                    <td>
+                                        <img onclick="location.href='{% url 'delete_match' match.id %}'" src="{% static "matches/images/trash.png" %}" alt="caneca de basura de color rojo">
+                                    </td>
                                 </tr>
                             {% endfor %}
                         </table>
@@ -77,39 +80,40 @@
                 {% endif %}
 
             <div class="der">
-                <h2>Agregar Partido</h2>
+                <h2>Add Match</h2>
                 <div class="formulario3">
-                    <form>
-                        <input type="text" placeholder="Equipo local">
-                        <input type="text" placeholder="Equipo visitante">
-                        <input type="text" placeholder="Estadio">
-                        <input type="date" placeholder="Fecha">
-                        <input type="number" placeholder="Hora">
-                        <input type="number" placeholder="Marcador">
-                        <input type="text" placeholder="Jugadores">
+                    <form method="post" action="{% url "add_match" %}">
+                        {% csrf_token %}
+                        <input type="text" placeholder="Home Team" name="away_team_name">
+                        <input type="text" placeholder="Away Team" name="home_team_name">
+                        <input type="text" placeholder="Stadium" name="stadium_name">
+                        <input type="date" placeholder="Date" name="date">
+                        <input type="number" placeholder="Time" name="time">
+                        <input type="number" placeholder="Home Score" name="home_team_score">
+                        <input type="number" placeholder="Away Score" name="away_team_score">
 
-                        <h3>Goles</h3>
-                        <input type="text" placeholder="Jugador">
-                        <input type="number" placeholder="Minuto">
-                        <input type="text" placeholder="Equipo">
+                        <h3>Goals</h3>
+                        <input type="text" placeholder="Player" name="scorer_name">
+                        <input type="number" placeholder="Minute" name="goal_minute">
+                        <input type="text" placeholder="Team" name="goal_team_name">
 
-                        <h3>Cambios</h3>
-                        <input type="text" placeholder="Jugador que entra">
-                        <input type="text" placeholder="Jugador que sale">
-                        <input type="number" placeholder="Minuto">
-                        <input type="text" placeholder="Equipo">
+                        <h3>Changes</h3>
+                        <input type="text" placeholder="In Player" name="in_player_name">
+                        <input type="text" placeholder="Out Player" name="out_player_name">
+                        <input type="number" placeholder="Minute" name="change_minute">
+                        <input type="text" placeholder="Team" name="change_team_name">
 
-                        <h3>Faltas</h3>
-                        <input type="text" placeholder="Motivo">
-                        <input type="number" placeholder="Minuto">
-                        <input type="text" placeholder="Equipo">
-                        <input type="text" placeholder="Tarjeta">
+                        <h3>Faults</h3>
+                        <input type="text" placeholder="Reason" name="fault_reason">
+                        <input type="number" placeholder="Minute" name="fault_minute">
+                        <input type="text" placeholder="Team" name="fault_team_name">
+                        <input type="text" placeholder="Card" name="card">
 
-                        <h3>Cobros</h3>
-                        <input type="text" placeholder="Lanzador">
-                        <input type="text" placeholder="Jugadores en barrera">
-                        <input type="text" placeholder="Equipo">
-                        <input type="submit" value="Agregar">
+                        <h3>Free Kicks</h3>
+                        <input type="text" placeholder="Shooter" name="shooter_name">
+                        <input type="text" placeholder="Barrier Players" name="barrier_names">
+                        <input type="text" placeholder="Team" name="free_kick_team_name">
+                        <input type="submit" value="Add Match">
                     </form>
                 </div>
             </div>

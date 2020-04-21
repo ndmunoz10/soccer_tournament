@@ -39,7 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home.apps.HomeConfig',
     'matches.apps.MatchesConfig',
-    'transfers.apps.TransfersConfig'
+    'transfers.apps.TransfersConfig',
+    'teams.apps.TeamsConfig',
+    'stadiums.apps.StadiumsConfig',
+    'referee.apps.RefereeConfig',
+    'auth.apps.AuthConfig'
 ]
 
 MIDDLEWARE = [
@@ -122,3 +126,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/login/'

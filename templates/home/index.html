@@ -20,23 +20,23 @@
             <div class="menu">
                 <nav>
                     <ul>
-                        <li><a class="active" href="{% url "index" %}">Inicio</a></li>
-                        <li><a href="{% url "get_matches" %}">Partidos</a></li>
-                        <li><a href="{% url "get_transfers" %}">Traspasos</a></li>
-                        <li><a href="equipos.html">Equipos</a></li>
-                        <li><a href="estadios.html">Estadios</a></li>
-                        <li><a href="arbitros.html">Arbitros</a></li>
+                        <li><a class="active" href="{% url "index" %}">Home</a></li>
+                        <li><a href="{% url "get_matches" %}">Matches</a></li>
+                        <li><a href="{% url "get_transfers" %}">Transfers</a></li>
+                        <li><a href="{% url "get_teams" %}">Teams</a></li>
+                        <li><a href="{% url "get_stadiums" %}">Stadiums</a></li>
+                        <li><a href="{% url "get_referees" %}">Referees</a></li>
                     </ul>
                 </nav>
             </div>
             <div class="content">
                 <img src="{% static "home/images/stadium.png" %}" alt="Imagen de un esatdio de futbol caricaturizado">
                 <div class="info">
-                    <p>Oso oro chino acaba de lanzar su aplicación para
-                        que sigas los partidos de tu equipo favorito,
-                        además tendras toda la imformación sobre los
-                        estadios, traspasos, arbitros y MUCHO MÁS.</p>
-                    <a href="partidos.html">Partidos</a>
+                    <p>Oso oro chino just launched its app for you to
+                        follow your favorite teams, along with all
+                        the information about stadiums, matches, transfers and
+                        MORE.</p>
+                    <a href="{% url "get_matches" %}">Matches</a>
                 </div>
             </div>
         </div>

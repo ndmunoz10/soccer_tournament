@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Authentication</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static "auth/styles.css" %}">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2&family=Fira+Sans:ital,wght@1,600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+    <h1>Oso de oro chino</h1>
+</header>
+<section class="contenedor1">
+    <div class="formulario">
+        <form class="register-form" method="post">
+            {% csrf_token %}
+            <input id="id_username" type="text" name="username" placeholder="Username"/>
+            <input id="id_password" type="password" name="password" placeholder="Password"/>
+            <button type="submit">Authenticate</button>
+        </form>
+    </div>
+</section>
+</body>
+</html>
